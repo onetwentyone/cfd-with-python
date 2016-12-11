@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 cfd-with-python
+
 """
 
 # Remember: comments in python are denoted by the pound sign
-import numpy                       #here we load numpy
-from matplotlib import pyplot      #here we load matplotlib
-import time, sys                   #and load some utilities
-
+import numpy as np 
+import matplotlib.pyplot as plt
+import time, sys  
 
 
 #this makes matplotlib plots appear in the notebook (instead of a separate window)
@@ -19,13 +20,16 @@ nt = 25    #nt is the number of timesteps we want to calculate
 dt = .025  #dt is the amount of time each timestep covers (delta t)
 c = 1      #assume wavespeed of c = 1
 
-u = numpy.ones(nx)      #numpy function ones()
+u = np.ones(nx)      #np function ones()
 u[int(.5 / dx):int(1 / dx + 1)] = 2  #setting u = 2 between 0.5 and 1 as per our I.C.s
-print(u)
+# print(u)
 
-pyplot.plot(numpy.linspace(0, 2, nx), u)
+x=np.linspace(0,2,nx)
 
-# un = numpy.ones(nx)  # initialize a temporary array
+plt.plot( x, u)
+plt.show()
+
+# un = np.ones(nx)  # initialize a temporary array
 #
 # for n in range(nt):  # loop for values of n from 0 to nt, so it will run nt times
 #     un = u.copy()  ##copy the existing values of u into un
@@ -35,5 +39,5 @@ pyplot.plot(numpy.linspace(0, 2, nx), u)
 #
 #
 #
-# pyplot.plot(numpy.linspace(0, 2, nx), u);
+# plt.plot(np.linspace(0, 2, nx), u);
 
