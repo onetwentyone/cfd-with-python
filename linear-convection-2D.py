@@ -2,14 +2,21 @@
 """
 cfd-with-python
 
-2D Linear Convection
-du/dt + c*du/dx = 0
+2-D Linear Convection
+du/dt + c*du/dx + c*du/dy = 0    # c is a constant
 
+Discretize forward in time, backward in space
+u_(i,j)^(n+1) - u_(i,j)^n       u_(i,j)^n - u_(i-1,j)^n       u_(i,j)^n - u_(i,j-1)^n
+------------------------- + c * ----------------------- + c * ----------------------- = 0
+            dt                             dx                            dy
+
+solve for: u_(i,j)^(n+1)
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 
 # ===========================Variable Declarations==============================
 
@@ -17,8 +24,8 @@ nx = 81             # number of grid points in x domain of  0 to 2
 ny = 81             # number of grid points in y domain of  0 to 2
 dx = 2 / (nx-1)     # distance between grid points in x domain
 dy = 2 / (ny-1)     # distance between grid points in y domain
-nt = 100            # nt is the number of timesteps to calculate
-dt = 0.01           # dt is the amount of time each timestep covers (delta t)
+nt = 80             # nt is the number of timesteps to calculate
+dt = 0.005           # dt is the amount of time each timestep covers (delta t)
 c = 1               # assume wave speed of c = 1
 # if at time dt, the wave is travelling a distance which is greater than dx there will be numerical instability
 # introduce the Courant number to insure stability. sigma = u*dt/dx + v*dt/dy <= sigmaMax
@@ -73,10 +80,11 @@ for n in range(nt + 1): # loop across number of time steps
     un = u.copy()
     u[1:, 1:] = (un[1:, 1:] - (c * dt / dx * (un[1:, 1:] - un[1:, :-1])) -
                               (c * dt / dy * (un[1:, 1:] - un[:-1, 1:])))
-    u[0, :] = 1
+    # Apply boundary condition of u = 1 at{x=0,2 & y=0,2}
+    u[ 0, :] = 1
     u[-1, :] = 1
-    u[:, 0] = 1
-    u[:, -1] = 1
+    u[ :, 0] = 1
+    u[ :,-1] = 1
 
 # ================================Plot Results==================================
 

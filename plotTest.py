@@ -12,9 +12,13 @@ import numpy as np
 x = np.arange(6)
 y = np.arange(5)
 z = x * y[:, np.newaxis]
+print(x)
+print(y)
 print(z)
+
 p = plt.imshow(z)
 fig = plt.gcf()
+
 plt.clim()  # clamp the color limits
 plt.title("Boring slide show")
 for i in range(5):
