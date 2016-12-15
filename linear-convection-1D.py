@@ -2,9 +2,15 @@
 """
 cfd-with-python
 
-1D Linear Convection
-du/dt + c*du/dx = 0
+1-D Linear Convection
+du/dt + c*du/dx = 0    # c is a constant
 
+Discretize forward in time, backward in space
+u_i^(n+1) - u_i^n          u_i^n - u_(i-1)^n
+-----------------  +   c * -----------------  =  0
+       dt                          dx
+
+solve for: u_i^(n+1)
 """
 
 import numpy as np
